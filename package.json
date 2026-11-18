@@ -1,0 +1,11 @@
+{
+  "name": "aiwo-api",
+  "version": "1.0.0",
+  "description": "爱窝时光后端API - 家庭共享小程序",
+  "dependencies": {
+    "@vercel/node": "^3.0.0",
+    "mongodb": "^6.3.0",
+    "cloudinary": "^1.41.0",
+    "cors": "^2.8.5"
+  }
+}
