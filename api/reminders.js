@@ -1,5 +1,4 @@
 // 提醒 API
-<<<<<<< HEAD
 const { ObjectId } = require('mongodb')
 const { connectToDatabase } = require('../lib/mongodb')
 
@@ -13,10 +12,6 @@ function toObjectId(id) {
   }
 }
 
-=======
-const { connectToDatabase } = require('../lib/mongodb')
-
->>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -89,11 +84,7 @@ module.exports = async (req, res) => {
       updateData.updatedAt = new Date()
 
       await collection.updateOne(
-<<<<<<< HEAD
         { _id: toObjectId(reminderId) },
-=======
-        { _id: reminderId },
->>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
         { $set: updateData }
       )
 
@@ -106,22 +97,14 @@ module.exports = async (req, res) => {
 
     // DELETE - 删除提醒
     if (method === 'DELETE') {
-<<<<<<< HEAD
       const reminderId = req.query.id || req.body?.reminderId
-=======
-      const reminderId = req.body.reminderId
->>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       if (!reminderId) {
         res.status(400).json({ success: false, message: '缺少提醒 ID' })
         return
       }
 
-<<<<<<< HEAD
       await collection.deleteOne({ _id: toObjectId(reminderId) })
-=======
-      await collection.deleteOne({ _id: reminderId })
->>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       res.status(200).json({
         success: true,
