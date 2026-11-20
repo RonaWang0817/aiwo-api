@@ -1,6 +1,22 @@
 // 动态 API
+<<<<<<< HEAD
+const { ObjectId } = require('mongodb')
 const { connectToDatabase } = require('../lib/mongodb')
 
+// 辅助函数：将字符串 ID 转换为 ObjectId
+function toObjectId(id) {
+  if (!id) return id
+  try {
+    return new ObjectId(id)
+  } catch (e) {
+    return id
+  }
+}
+
+=======
+const { connectToDatabase } = require('../lib/mongodb')
+
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 module.exports = async (req, res) => {
   // 处理 CORS 预检请求
   if (req.method === 'OPTIONS') {
@@ -74,7 +90,11 @@ module.exports = async (req, res) => {
         return
       }
 
+<<<<<<< HEAD
+      const moment = await collection.findOne({ _id: toObjectId(momentId) })
+=======
       const moment = await collection.findOne({ _id: momentId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       if (!moment) {
         res.status(404).json({ success: false, message: '动态不存在' })
         return
@@ -93,7 +113,11 @@ module.exports = async (req, res) => {
         }
 
         await collection.updateOne(
+<<<<<<< HEAD
+          { _id: toObjectId(momentId) },
+=======
           { _id: momentId },
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
           { $set: { likes } }
         )
 
@@ -120,7 +144,11 @@ module.exports = async (req, res) => {
         comments.push(comment)
 
         await collection.updateOne(
+<<<<<<< HEAD
+          { _id: toObjectId(momentId) },
+=======
           { _id: momentId },
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
           { $set: { comments } }
         )
 
@@ -138,7 +166,12 @@ module.exports = async (req, res) => {
 
     // DELETE - 删除动态
     if (method === 'DELETE') {
+<<<<<<< HEAD
+      // 从 query 或 body 获取 momentId
+      const momentId = req.query.id || req.body?.momentId
+=======
       const momentId = req.body.momentId
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       const userId = req.headers['x-user-id']
 
       if (!momentId) {
@@ -146,14 +179,31 @@ module.exports = async (req, res) => {
         return
       }
 
+<<<<<<< HEAD
+      // 转换为 ObjectId
+      let objectId
+      try {
+        objectId = new ObjectId(momentId)
+      } catch (e) {
+        // 如果不是有效的 ObjectId，直接用字符串
+        objectId = momentId
+      }
+
+      const moment = await collection.findOne({ _id: objectId })
+=======
       const moment = await collection.findOne({ _id: momentId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       if (!moment) {
         res.status(404).json({ success: false, message: '动态不存在' })
         return
       }
 
       // 权限检查：家人可以删除任何家人的动态
+<<<<<<< HEAD
+      await collection.deleteOne({ _id: objectId })
+=======
       await collection.deleteOne({ _id: momentId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       res.status(200).json({
         success: true,
