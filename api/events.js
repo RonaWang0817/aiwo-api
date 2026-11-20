@@ -1,6 +1,22 @@
 // 日历事件 API
+<<<<<<< HEAD
+const { ObjectId } = require('mongodb')
 const { connectToDatabase } = require('../lib/mongodb')
 
+// 辅助函数：将字符串 ID 转换为 ObjectId
+function toObjectId(id) {
+  if (!id) return id
+  try {
+    return new ObjectId(id)
+  } catch (e) {
+    return id
+  }
+}
+
+=======
+const { connectToDatabase } = require('../lib/mongodb')
+
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -40,6 +56,8 @@ module.exports = async (req, res) => {
         return
       }
 
+<<<<<<< HEAD
+=======
       // 获取用户角色以确定颜色
       const usersDb = db.collection('users')
       const user = await usersDb.findOne({ openid: userId })
@@ -50,6 +68,7 @@ module.exports = async (req, res) => {
       }
       const color = user ? (roleColors[user.role] || '#999999') : '#999999'
 
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       const event = {
         userId,
         userName: body.userName || '家人',
@@ -58,7 +77,11 @@ module.exports = async (req, res) => {
         startTime: body.startTime || '',
         endTime: body.endTime || '',
         description: body.description || '',
+<<<<<<< HEAD
+        color: body.color || '#FF8C42',
+=======
         color,
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
         createdAt: new Date()
       }
 
@@ -76,22 +99,34 @@ module.exports = async (req, res) => {
 
     // DELETE - 删除事件
     if (method === 'DELETE') {
+<<<<<<< HEAD
+      const eventId = req.query.id || req.body?.eventId
+=======
       const eventId = req.body.eventId
       const userId = req.headers['x-user-id']
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       if (!eventId) {
         res.status(400).json({ success: false, message: '缺少事件 ID' })
         return
       }
 
+<<<<<<< HEAD
+      const event = await collection.findOne({ _id: toObjectId(eventId) })
+=======
       const event = await collection.findOne({ _id: eventId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       if (!event) {
         res.status(404).json({ success: false, message: '事件不存在' })
         return
       }
 
+<<<<<<< HEAD
+      await collection.deleteOne({ _id: toObjectId(eventId) })
+=======
       // 权限检查：家人可以删除任何家人的事件
       await collection.deleteOne({ _id: eventId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       res.status(200).json({
         success: true,
