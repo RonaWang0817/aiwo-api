@@ -1,6 +1,22 @@
 // 相册 API
+<<<<<<< HEAD
+const { ObjectId } = require('mongodb')
 const { connectToDatabase } = require('../lib/mongodb')
 
+// 辅助函数：将字符串 ID 转换为 ObjectId
+function toObjectId(id) {
+  if (!id) return id
+  try {
+    return new ObjectId(id)
+  } catch (e) {
+    return id
+  }
+}
+
+=======
+const { connectToDatabase } = require('../lib/mongodb')
+
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -18,7 +34,11 @@ module.exports = async (req, res) => {
 
       if (albumId) {
         // 获取单个相册
+<<<<<<< HEAD
+        const album = await collection.findOne({ _id: toObjectId(albumId) })
+=======
         const album = await collection.findOne({ _id: albumId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
         if (!album) {
           res.status(404).json({ success: false, message: '相册不存在' })
           return
@@ -82,7 +102,11 @@ module.exports = async (req, res) => {
           createdAt: new Date()
         }
 
+<<<<<<< HEAD
+        const album = await collection.findOne({ _id: toObjectId(albumId) })
+=======
         const album = await collection.findOne({ _id: albumId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
         if (!album) {
           res.status(404).json({ success: false, message: '相册不存在' })
           return
@@ -97,7 +121,11 @@ module.exports = async (req, res) => {
         }
 
         await collection.updateOne(
+<<<<<<< HEAD
+          { _id: toObjectId(albumId) },
+=======
           { _id: albumId },
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
           { $set: updateData }
         )
 
@@ -122,7 +150,11 @@ module.exports = async (req, res) => {
       // 重命名相册
       if (action === 'rename') {
         await collection.updateOne(
+<<<<<<< HEAD
+          { _id: toObjectId(albumId) },
+=======
           { _id: albumId },
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
           { $set: { name: body.name, updatedAt: new Date() } }
         )
 
@@ -136,7 +168,11 @@ module.exports = async (req, res) => {
       // 删除照片
       if (action === 'deletePhoto') {
         const photoIndex = body.photoIndex
+<<<<<<< HEAD
+        const album = await collection.findOne({ _id: toObjectId(albumId) })
+=======
         const album = await collection.findOne({ _id: albumId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
         if (!album) {
           res.status(404).json({ success: false, message: '相册不存在' })
@@ -154,7 +190,11 @@ module.exports = async (req, res) => {
         }
 
         await collection.updateOne(
+<<<<<<< HEAD
+          { _id: toObjectId(albumId) },
+=======
           { _id: albumId },
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
           { $set: updateData }
         )
 
@@ -171,14 +211,22 @@ module.exports = async (req, res) => {
 
     // DELETE - 删除相册
     if (method === 'DELETE') {
+<<<<<<< HEAD
+      const albumId = req.query.id || req.body?.albumId
+=======
       const albumId = req.body.albumId
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       if (!albumId) {
         res.status(400).json({ success: false, message: '缺少相册 ID' })
         return
       }
 
+<<<<<<< HEAD
+      await collection.deleteOne({ _id: toObjectId(albumId) })
+=======
       await collection.deleteOne({ _id: albumId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       res.status(200).json({
         success: true,
