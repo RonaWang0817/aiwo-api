@@ -1,6 +1,22 @@
 // 留言 API
+<<<<<<< HEAD
+const { ObjectId } = require('mongodb')
 const { connectToDatabase } = require('../lib/mongodb')
 
+// 辅助函数：将字符串 ID 转换为 ObjectId
+function toObjectId(id) {
+  if (!id) return id
+  try {
+    return new ObjectId(id)
+  } catch (e) {
+    return id
+  }
+}
+
+=======
+const { connectToDatabase } = require('../lib/mongodb')
+
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -59,7 +75,11 @@ module.exports = async (req, res) => {
 
     // DELETE - 删除留言
     if (method === 'DELETE') {
+<<<<<<< HEAD
+      const messageId = req.query.id || req.body?.messageId
+=======
       const messageId = req.body.messageId
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       const userId = req.headers['x-user-id']
 
       if (!messageId) {
@@ -67,14 +87,22 @@ module.exports = async (req, res) => {
         return
       }
 
+<<<<<<< HEAD
+      const message = await collection.findOne({ _id: toObjectId(messageId) })
+=======
       const message = await collection.findOne({ _id: messageId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
       if (!message) {
         res.status(404).json({ success: false, message: '留言不存在' })
         return
       }
 
+<<<<<<< HEAD
+      await collection.deleteOne({ _id: toObjectId(messageId) })
+=======
       // 权限检查：家人可以删除任何家人的留言
       await collection.deleteOne({ _id: messageId })
+>>>>>>> 259cc48caa46a0a9c834a54674eb1539b4327413
 
       res.status(200).json({
         success: true,
